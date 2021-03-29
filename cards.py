@@ -11,7 +11,6 @@ class Solver:
         self.cpu_count = os.cpu_count()
 
         self.operations = list(product(["+", "-", "*", "/"],repeat = 4))
-        # This is damn stupid please fix this
         self.brackets = list(list(x) for x in list(filter(lambda bracket: sum(bracket) == 5, list(product([0,1,2,3,4,5], repeat = 6)))))
         self.brackets = list(set(tuple(filter((0).__ne__, x)) for x in self.brackets))
 
@@ -19,9 +18,7 @@ class Solver:
 
     def worker(self, move):
         results = []
-
         target = self.target
-
 
         for seq in self.operations:
             for bracket in self.brackets:
@@ -47,7 +44,6 @@ class Solver:
         
         return results
 
-
     def solve(self, cards, target):
         possibleMoves = list(permutations(cards))
 
@@ -58,7 +54,6 @@ class Solver:
 
         return set(chain(*result))
     
-
 
 if __name__ == "__main__":
     solver = Solver()
