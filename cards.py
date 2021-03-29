@@ -4,24 +4,22 @@ from itertools import product
 
 class Solver:
     def __init__(self):
-        self.results = {}
+        self.results = []
         self.operations = list(product(["+", "-", "*", "/"],repeat = 4))
         # This is damn stupid please fix this
         self.brackets = list(list(x) for x in list(filter(lambda bracket: sum(bracket) == 5, list(product([0,1,2,3,4,5], repeat = 6)))))
         self.brackets = list(set(tuple(filter((0).__ne__, x)) for x in self.brackets))
 
-    def solve(self, cards, number):
+    def solve(self, cards, target):
         possibleMoves = list(permutations(cards))
 
         for move in possibleMoves:
             for seq in self.operations:
-               self.evalwBrackets(move, seq) 
+               self.addRelevant(move, seq, target) 
 
-        for k in self.results:
-            if k == number:
-                self.printResults(self.results[k])
+        return self.results
     
-    def evalwBrackets(self, numbers, seq):
+    def addRelevant(self, numbers, seq, target):
         for bracket in self.brackets:
             lNumbers = numbers
             lSeq = list(seq)
@@ -38,23 +36,12 @@ class Solver:
                 lNumbers = lNumbers[i:]
             try:
                 res = eval(string)
-                if int(res) == res and res > 0:
-                    if res in self.results.keys():
-                        self.results[res].append(string)
-                    else:
-                        self.results[res] = [string]
+                if int(res) == target:
+                    self.results.append(string)
             except:
                 pass
 
 
-    def printResults(self, results):
-        results = set(results)
-        if len(results) == 0: 
-            print("Not possible")
-        else: 
-            print("There are {res} results. ".format(res = len(results)))
-            print(results)
-
 if __name__ == "__main__":
     solver = Solver()
-    solver.solve([6,7,3,2,1], 79)
+    print(solver.solve([6,7,3,2,1], 79))
