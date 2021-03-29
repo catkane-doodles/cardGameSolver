@@ -18,9 +18,14 @@ class Solver:
         self.target = None
 
     def worker(self, move):
-        def addRelevant(numbers, seq, target):
+        results = []
+
+        target = self.target
+
+
+        for seq in self.operations:
             for bracket in self.brackets:
-                lNumbers = numbers
+                lNumbers = move
                 lSeq = list(seq)
                 lSeq.insert(0, "")
                 string = ""
@@ -36,19 +41,9 @@ class Solver:
                 try:
                     res = eval(string)
                     if int(res) == target:
-                        return string
+                        results.append(string)
                 except:
-                    return None
-
-            return None
-
-        results = []
-
-        target = self.target
-
-
-        for seq in self.operations:
-            results.append(addRelevant(move, seq, target))
+                    pass
         
         return results
 
