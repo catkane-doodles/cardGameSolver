@@ -57,4 +57,4 @@ class Solver:
 
 if __name__ == "__main__":
     solver = Solver()
-    print(solver.solve([1,2,3,4,5], 5))
+    print(solver.solve([10,10,9,8,2], 46))
